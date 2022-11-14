@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.source.service.CalculateSalaryChain;
+package com.source.service.EmployeeBonusService.calculateSalaryChain;
 
 import com.source.dto.EmployeeBonusDTO;
 import com.source.model.EmployeeBonusModel;

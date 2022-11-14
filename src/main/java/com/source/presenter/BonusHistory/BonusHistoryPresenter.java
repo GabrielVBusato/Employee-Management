@@ -4,16 +4,12 @@
  */
 package com.source.presenter.BonusHistory;
 
-import com.source.dbConnection.connections.IDatabaseConnection;
 import com.source.model.EmployeeBonusModel;
-import com.source.service.EmployeeBonusService;
+import com.source.service.EmployeeBonusService.EmployeeBonusService;
 import com.source.view.BonusHistoryView;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**

@@ -7,13 +7,12 @@ package com.source.presenter.EmployeeManagement;
 import com.source.model.EmployeeModel;
 import com.source.presenter.EmployeeManagement.states.CreateState;
 import com.source.presenter.EmployeeManagement.states.UpdateState;
-import com.source.service.EmployeeService;
+import com.source.service.EmployeeService.EmployeeService;
+import com.source.utils.DateUtils;
 import com.source.view.EmployeeManagementView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -107,9 +106,6 @@ public final class EmployeeManagementPresenter {
     }
 
     public EmployeeModel getModel() {
-        LocalDate dateObj = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String date = dateObj.format(formatter);
         EmployeeModel employee = new EmployeeModel();
         employee.setTotalAbsencesFromWork(Integer.parseInt(view.getTxtAbsencesFromWork().getText()));
         employee.setServiceTime(view.getTxtServiceTime().getText());
@@ -119,7 +115,7 @@ public final class EmployeeManagementPresenter {
         employee.setRole((String) view.getComboRole().getSelectedItem());
         employee.setId(searchId);
         employee.setEmployeeOfTheMonth(view.getCheckBoxMonthEmployee().isSelected() ? 1 : 0);
-        employee.setCreatedAt(date);
+        employee.setCreatedAt(DateUtils.getFormattedCurrentDate());
         return employee;
     }
 
@@ -131,6 +127,15 @@ public final class EmployeeManagementPresenter {
         view.getTxtServiceTime().setText(employee.getServiceTime());
         view.getCheckBoxMonthEmployee().setSelected((employee.getEmployeeOfTheMonth() == 1));
         view.getComboRole().setSelectedItem(employee.getRole());
+    }
+
+    public boolean isAllFieldsFilled() {
+        return !(view.getTxtAbsencesFromWork().getText().isEmpty()
+                || view.getTxtDistanceFromWork().getText().isEmpty()
+                || view.getTxtName().getText().isEmpty()
+                || view.getTxtSalary().getText().isEmpty()
+                || view.getTxtServiceTime().getText().isEmpty()
+                || view.getComboRole().getSelectedIndex() == -1);
     }
 
     public void initComponents() {
@@ -145,14 +150,16 @@ public final class EmployeeManagementPresenter {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    state.onCreate();
-                    JOptionPane.showConfirmDialog(view, "Funcionário criado com sucesso",
-                            "Sucesso", JOptionPane.DEFAULT_OPTION,
-                            JOptionPane.PLAIN_MESSAGE);
+                    if (isAllFieldsFilled()) {
+                        state.onCreate();
+                        JOptionPane.showConfirmDialog(view, "Funcionário criado com sucesso",
+                                "Sucesso", JOptionPane.DEFAULT_OPTION,
+                                JOptionPane.PLAIN_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios.");
+                    }
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Erro ao criar funcionário");
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios.");
                 }
             }
         });

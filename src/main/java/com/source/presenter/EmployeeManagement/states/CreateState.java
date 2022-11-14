@@ -7,7 +7,6 @@ package com.source.presenter.EmployeeManagement.states;
 import com.source.presenter.EmployeeManagement.EmployeeManagementPresenter;
 import com.source.presenter.EmployeeManagement.EmployeeManagementState;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
 
 /**
  *

@@ -4,10 +4,9 @@
  */
 package com.source.presenter.CalculateSalarys;
 
-import com.source.dbConnection.connections.IDatabaseConnection;
 import com.source.model.EmployeeModel;
-import com.source.service.EmployeeBonusService;
-import com.source.service.EmployeeService;
+import com.source.service.EmployeeBonusService.EmployeeBonusService;
+import com.source.service.EmployeeService.EmployeeService;
 import com.source.utils.DateUtils;
 import com.source.view.CalculateSalarysView;
 import java.awt.event.ActionEvent;

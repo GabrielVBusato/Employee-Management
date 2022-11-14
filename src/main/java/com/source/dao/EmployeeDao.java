@@ -107,4 +107,54 @@ public class EmployeeDao implements IDao<EmployeeDTO> {
         result = statement.executeQuery(query);
         return result;
     }
+
+    public ResultSet getAverageSalarys() throws SQLException {
+        ResultSet result;
+        Statement statement;
+        String query = "SELECT AVG(base_salary) as salary_avg from employee ";
+        connection.connect();
+        statement = connection.createStatement();
+        result = statement.executeQuery(query);
+        return result;
+    }
+
+    public ResultSet getSumSalarys() throws SQLException {
+        ResultSet result;
+        Statement statement;
+        String query = "SELECT SUM(base_salary) as salary_sum from employee ";
+        connection.connect();
+        statement = connection.createStatement();
+        result = statement.executeQuery(query);
+        return result;
+    }
+
+    public ResultSet getHighestSalary() throws SQLException {
+        ResultSet result;
+        Statement statement;
+        String query = "SELECT MAX(base_salary) as max_salary from employee ";
+        connection.connect();
+        statement = connection.createStatement();
+        result = statement.executeQuery(query);
+        return result;
+    }
+
+    public ResultSet getLowestSalary() throws SQLException {
+        ResultSet result;
+        Statement statement;
+        String query = "SELECT MIN(base_salary) as min_salary from employee ";
+        connection.connect();
+        statement = connection.createStatement();
+        result = statement.executeQuery(query);
+        return result;
+    }
+
+    public ResultSet getTotalSalarys() throws SQLException {
+        ResultSet result;
+        Statement statement;
+        String query = "SELECT count(base_salary) as total_salarys from employee ";
+        connection.connect();
+        statement = connection.createStatement();
+        result = statement.executeQuery(query);
+        return result;
+    }
 }

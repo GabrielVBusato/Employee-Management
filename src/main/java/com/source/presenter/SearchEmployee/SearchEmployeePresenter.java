@@ -7,8 +7,8 @@ package com.source.presenter.SearchEmployee;
 import com.source.model.EmployeeModel;
 import com.source.presenter.BonusHistory.BonusHistoryPresenter;
 import com.source.presenter.EmployeeManagement.EmployeeManagementPresenter;
-import com.source.service.EmployeeBonusService;
-import com.source.service.EmployeeService;
+import com.source.service.EmployeeBonusService.EmployeeBonusService;
+import com.source.service.EmployeeService.EmployeeService;
 import com.source.view.SearchEmployeeView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,10 +35,6 @@ public final class SearchEmployeePresenter {
         this.service = service;
         this.bonusService = bonusService;
         view.setVisible(true);
-    }
-
-    public List<EmployeeModel> getEmployeesByName(String name) throws SQLException {
-        return this.service.getAllEmployeesByName(name);
     }
 
     public String getSelectedRowValue(int column) {

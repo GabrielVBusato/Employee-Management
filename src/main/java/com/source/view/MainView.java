@@ -37,6 +37,7 @@ public class MainView extends javax.swing.JFrame {
         menuItemSearchEmployee = new javax.swing.JMenuItem();
         menuSalaryManagement = new javax.swing.JMenu();
         menuItemCalculateSalarys = new javax.swing.JMenuItem();
+        menuItemSalaryStatistics = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de gestão de pessoas");
@@ -61,6 +62,9 @@ public class MainView extends javax.swing.JFrame {
         menuItemCalculateSalarys.setText("Calcular salários");
         menuSalaryManagement.add(menuItemCalculateSalarys);
 
+        menuItemSalaryStatistics.setText("Estatística dos salários");
+        menuSalaryManagement.add(menuItemSalaryStatistics);
+
         menuBarMain.add(menuSalaryManagement);
 
         setJMenuBar(menuBarMain);
@@ -82,6 +86,14 @@ public class MainView extends javax.swing.JFrame {
 
     public JMenuItem getMenuItemCreateEmployee() {
         return menuItemCreateEmployee;
+    }
+
+    public JMenuItem getMenuItemSalaryStatistics() {
+        return menuItemSalaryStatistics;
+    }
+
+    public void setMenuItemSalaryStatistics(JMenuItem menuItemSalaryStatistics) {
+        this.menuItemSalaryStatistics = menuItemSalaryStatistics;
     }
 
     public void setMenuItemCreateEmployee(JMenuItem menuItemCreateEmployee) {
@@ -135,6 +147,7 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JMenu menuEmployeeManagement;
     private javax.swing.JMenuItem menuItemCalculateSalarys;
     private javax.swing.JMenuItem menuItemCreateEmployee;
+    private javax.swing.JMenuItem menuItemSalaryStatistics;
     private javax.swing.JMenuItem menuItemSearchEmployee;
     private javax.swing.JMenu menuSalaryManagement;
     // End of variables declaration//GEN-END:variables

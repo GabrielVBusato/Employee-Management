@@ -7,9 +7,10 @@ package com.source.presenter;
 import com.source.dbConnection.connections.IDatabaseConnection;
 import com.source.presenter.CalculateSalarys.CalculateSalarysPresenter;
 import com.source.presenter.EmployeeManagement.EmployeeManagementPresenter;
+import com.source.presenter.SalaryStatistics.SalaryStatisticsPresenter;
 import com.source.presenter.SearchEmployee.SearchEmployeePresenter;
-import com.source.service.EmployeeBonusService;
-import com.source.service.EmployeeService;
+import com.source.service.EmployeeBonusService.EmployeeBonusService;
+import com.source.service.EmployeeService.EmployeeService;
 import com.source.view.MainView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -51,6 +52,12 @@ public class MainPresenter {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new CalculateSalarysPresenter(employeeService, employeeBonusService);
+            }
+        });
+        view.getMenuItemSalaryStatistics().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SalaryStatisticsPresenter(employeeService);
             }
         });
     }

@@ -8,6 +8,11 @@ import com.source.dao.EmployeeDao;
 import com.source.dbConnection.connections.IDatabaseConnection;
 import com.source.dto.EmployeeDTO;
 import com.source.model.EmployeeModel;
+import com.source.service.EmployeeService.strategy.AverageSalary;
+import com.source.service.EmployeeService.strategy.HighestSalary;
+import com.source.service.EmployeeService.strategy.LowestSalary;
+import com.source.service.EmployeeService.strategy.SumSalary;
+import com.source.service.EmployeeService.strategy.TotalNumberOfSalarys;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -77,7 +82,7 @@ public class EmployeeRepository {
         connection.disconnect();
         return employees;
     }
-    
+
     public List<EmployeeModel> getAllEmployeesByName(String name) throws SQLException {
         ResultSet result = employeeDao.getAllByName(name);
         List<EmployeeModel> employees = new ArrayList<>();
@@ -108,5 +113,55 @@ public class EmployeeRepository {
         }
         connection.disconnect();
         return roles;
+    }
+
+    public AverageSalary getAverageSalarys() throws SQLException {
+        ResultSet result = employeeDao.getAverageSalarys();
+        AverageSalary salary = new AverageSalary();
+        while (result.next()) {
+            salary.setValue(result.getString("salary_avg"));
+        }
+        connection.disconnect();
+        return salary;
+    }
+    
+    public SumSalary getSumSalarys() throws SQLException {
+        ResultSet result = employeeDao.getSumSalarys();
+        SumSalary salary = new SumSalary();
+        while (result.next()) {
+            salary.setValue(result.getString("salary_sum"));
+        }
+        connection.disconnect();
+        return salary;
+    }
+    
+    public LowestSalary getLowestSalary() throws SQLException {
+        ResultSet result = employeeDao.getLowestSalary();
+        LowestSalary salary = new LowestSalary();
+        while (result.next()) {
+            salary.setValue(result.getString("min_salary"));
+        }
+        connection.disconnect();
+        return salary;
+    }
+    
+   public HighestSalary getHighestSalary() throws SQLException {
+        ResultSet result = employeeDao.getHighestSalary();
+        HighestSalary salary = new HighestSalary();
+        while (result.next()) {
+            salary.setValue(result.getString("max_salary"));
+        }
+        connection.disconnect();
+        return salary;
+    }
+   
+   public TotalNumberOfSalarys getTotalSalarys() throws SQLException {
+        ResultSet result = employeeDao.getTotalSalarys();
+        TotalNumberOfSalarys salary = new TotalNumberOfSalarys();
+        while (result.next()) {
+            salary.setValue(result.getString("total_salarys"));
+        }
+        connection.disconnect();
+        return salary;
     }
 }

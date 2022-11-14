@@ -1,14 +1,14 @@
-package com.source.service;
+package com.source.service.EmployeeBonusService;
 
 import com.source.dbConnection.connections.IDatabaseConnection;
 import com.source.dto.EmployeeBonusDTO;
 import com.source.model.EmployeeBonusModel;
 import com.source.model.EmployeeModel;
 import com.source.repository.EmployeeBonusRepository;
-import com.source.service.CalculateSalaryChain.BonusCalculator;
-import com.source.service.CalculateSalaryChain.CalculateBonusByAssiduity;
-import com.source.service.CalculateSalaryChain.CalculateBonusByEmployeeOfTheMonth;
-import com.source.service.CalculateSalaryChain.CalculateBonusByServiceTime;
+import com.source.service.EmployeeBonusService.calculateSalaryChain.BonusCalculator;
+import com.source.service.EmployeeBonusService.calculateSalaryChain.CalculateBonusByAssiduity;
+import com.source.service.EmployeeBonusService.calculateSalaryChain.CalculateBonusByEmployeeOfTheMonth;
+import com.source.service.EmployeeBonusService.calculateSalaryChain.CalculateBonusByServiceTime;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
