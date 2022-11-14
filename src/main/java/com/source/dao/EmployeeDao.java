@@ -25,10 +25,10 @@ public class EmployeeDao implements IDao<EmployeeDTO> {
 
     @Override
     public int create(EmployeeDTO entity) throws SQLException {
-        String valuesFormat = String.format(Locale.US, "('%s', '%s', '%.2f', '%.2f', "
-                + "'%.2f', '%s', '%d')", entity.getName(), entity.getRole(), entity.getBaseSalary(),
-                entity.getDistanceFromWork(), entity.getServiceTime(), entity.getCreatedAt(), entity.getAbsencesFromWork());
-        String query = "INSERT INTO employee (name, role, base_salary, distance_from_work, service_time, created_at, absences_from_work) VALUES "
+        String valuesFormat = String.format(Locale.US, "('%s', '%s', '%s', '%s', "
+                + "'%s', '%s', '%d', '%d')", entity.getName(), entity.getRole(), entity.getBaseSalary(),
+                entity.getDistanceFromWork(), entity.getServiceTime(), entity.getCreatedAt(), entity.getAbsencesFromWork(), entity.getEmployeeOfTheMonth());
+        String query = "INSERT INTO employee (name, role, base_salary, distance_from_work, service_time, created_at, absences_from_work, employee_of_the_month) VALUES "
                 + valuesFormat;
         connection.connect();
         Statement statement = connection.createStatement();
@@ -65,11 +65,12 @@ public class EmployeeDao implements IDao<EmployeeDTO> {
     @Override
     public void update(EmployeeDTO entity) throws SQLException {
         String query = String.format(Locale.US, "UPDATE employee SET name = '%s'"
-                + ", role = '%s', base_salary = '%.2f', distance_from_work = '%s'"
-                + ", service_time = '%s', absences_from_work = '%d' where id = %d",
+                + ", role = '%s', base_salary = '%s', distance_from_work = '%s'"
+                + ", service_time = '%s', absences_from_work = '%d', employee_of_the_month = '%d' where id = %d",
                 entity.getName(), entity.getRole(),
                 entity.getBaseSalary(), entity.getDistanceFromWork(),
-                entity.getServiceTime(), entity.getAbsencesFromWork(), entity.getId());
+                entity.getServiceTime(), entity.getAbsencesFromWork(), entity.getEmployeeOfTheMonth(),
+                entity.getId());
         connection.connect();
         connection.createStatement().execute(query);
         connection.disconnect();
@@ -85,7 +86,16 @@ public class EmployeeDao implements IDao<EmployeeDTO> {
         statement = connection.createStatement();
         result = statement.executeQuery(query);
         return result;
+    }
 
+    public ResultSet getAllByName(String name) throws SQLException {
+        ResultSet result;
+        Statement statement;
+        String query = "Select * from employee where name like '" + name + "%'";
+        connection.connect();
+        statement = connection.createStatement();
+        result = statement.executeQuery(query);
+        return result;
     }
 
     public ResultSet getAllRoles() throws SQLException {

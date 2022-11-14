@@ -4,7 +4,6 @@
  */
 package com.source.presenter.EmployeeManagement;
 
-import com.source.dbConnection.connections.IDatabaseConnection;
 import com.source.model.EmployeeModel;
 import com.source.presenter.EmployeeManagement.states.CreateState;
 import com.source.presenter.EmployeeManagement.states.UpdateState;
@@ -13,10 +12,10 @@ import com.source.view.EmployeeManagementView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,25 +29,24 @@ public final class EmployeeManagementPresenter {
     private int searchId;
 
     public EmployeeManagementPresenter(
-            IDatabaseConnection connection) {
+            EmployeeService service) {
         if (view == null) {
             view = new EmployeeManagementView();
         }
-        this.service = new EmployeeService(connection);
-        initComponents();
+        this.service = service;
         this.state = new CreateState(this);
         view.setVisible(true);
     }
 
-    public EmployeeManagementPresenter(IDatabaseConnection connection,
-            int id) {
+    public EmployeeManagementPresenter(EmployeeService service,
+            int id) throws SQLException {
         if (view == null) {
             view = new EmployeeManagementView();
         }
-        view.setVisible(true);
-        this.state = new UpdateState(this);
-        this.service = new EmployeeService(connection);
         this.searchId = id;
+        this.service = service;
+        this.state = new UpdateState(this);
+        view.setVisible(true);
     }
 
     public EmployeeManagementState getState() {
@@ -59,38 +57,20 @@ public final class EmployeeManagementPresenter {
         this.state = state;
     }
 
-    public void createEmployee() {
-        try {  
-            searchId = service.createEmployee(getModel());
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
+    public void createEmployee() throws SQLException {
+        searchId = service.createEmployee(getModel());
     }
 
-    public void editEmployee() {
-        try {
-            service.editEmployee(getModel());
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
+    public void editEmployee() throws SQLException {
+        service.editEmployee(getModel());
     }
 
-    public void deleteEmployee() {
-        try {
-            service.deleteEmployeeById(searchId);
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
+    public void deleteEmployee() throws SQLException {
+        service.deleteEmployeeById(searchId);
     }
 
-    public EmployeeModel getEmployeeById(int id) {
-        EmployeeModel employee = null;
-        try {
-            employee = service.getEmployeeById(id);
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-        return employee;
+    public EmployeeModel getEmployeeById(int id) throws SQLException {
+        return service.getEmployeeById(id);
     }
 
     public EmployeeManagementView getView() {
@@ -110,6 +90,14 @@ public final class EmployeeManagementPresenter {
             view.getBtnUpdate().removeActionListener(al);
         }
 
+        for (ActionListener al : view.getBtnClose().getActionListeners()) {
+            view.getBtnClose().removeActionListener(al);
+        }
+
+        for (ActionListener al : view.getBtnDelete().getActionListeners()) {
+            view.getBtnDelete().removeActionListener(al);
+        }
+
         view.getTxtAbsencesFromWork().setText("");
         view.getTxtDistanceFromWork().setText("");
         view.getTxtName().setText("");
@@ -124,41 +112,91 @@ public final class EmployeeManagementPresenter {
         String date = dateObj.format(formatter);
         EmployeeModel employee = new EmployeeModel();
         employee.setTotalAbsencesFromWork(Integer.parseInt(view.getTxtAbsencesFromWork().getText()));
-        employee.setServiceTime(Double.parseDouble(view.getTxtServiceTime().getText()));
-        employee.setDistanceFromWork(Double.parseDouble(view.getTxtDistanceFromWork().getText()));
+        employee.setServiceTime(view.getTxtServiceTime().getText());
+        employee.setDistanceFromWork(view.getTxtDistanceFromWork().getText());
         employee.setName(view.getTxtName().getText());
-        employee.setBaseSalary(Double.parseDouble(view.getTxtSalary().getText()));
+        employee.setBaseSalary(view.getTxtSalary().getText());
         employee.setRole((String) view.getComboRole().getSelectedItem());
         employee.setId(searchId);
+        employee.setEmployeeOfTheMonth(view.getCheckBoxMonthEmployee().isSelected() ? 1 : 0);
         employee.setCreatedAt(date);
         return employee;
     }
 
     public void setModel(EmployeeModel employee) {
-        DecimalFormat format = new DecimalFormat("0.#");
         view.getTxtAbsencesFromWork().setText(Integer.toString(employee.getTotalAbsencesFromWork()));
-        view.getTxtDistanceFromWork().setText(format.format(employee.getDistanceFromWork()));
+        view.getTxtDistanceFromWork().setText(employee.getDistanceFromWork());
         view.getTxtName().setText(employee.getName());
-        view.getTxtSalary().setText(format.format(employee.getBaseSalary()));
-        view.getTxtServiceTime().setText(format.format(employee.getServiceTime()));
+        view.getTxtSalary().setText(employee.getBaseSalary());
+        view.getTxtServiceTime().setText(employee.getServiceTime());
+        view.getCheckBoxMonthEmployee().setSelected((employee.getEmployeeOfTheMonth() == 1));
         view.getComboRole().setSelectedItem(employee.getRole());
     }
 
     public void initComponents() {
+        clearScreen();
         view.getBtnClose().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 view.dispose();
             }
         });
-
+        view.getBtnCreate().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    state.onCreate();
+                    JOptionPane.showConfirmDialog(view, "Funcionário criado com sucesso",
+                            "Sucesso", JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.PLAIN_MESSAGE);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao criar funcionário");
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios.");
+                }
+            }
+        });
+        view.getBtnUpdate().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    state.onUpdate();
+                    JOptionPane.showConfirmDialog(view, "Funcionário atualizado com sucesso",
+                            "Sucesso", JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.PLAIN_MESSAGE);
+                    view.dispose();
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao atualizar funcionário");
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios.");
+                }
+            }
+        });
+        view.getBtnDelete().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int inputConfirm = JOptionPane.showConfirmDialog(null,
+                            "Deseja realmente deletar?", "Selecione uma opção...", JOptionPane.YES_NO_CANCEL_OPTION);
+                    if (inputConfirm == 0) {
+                        state.onDelete();
+                        JOptionPane.showConfirmDialog(view, "Funcionário deletado com sucesso",
+                                "Sucesso", JOptionPane.DEFAULT_OPTION,
+                                JOptionPane.PLAIN_MESSAGE);
+                        view.dispose();
+                    }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao deletar funcionário");
+                }
+            }
+        });
         try {
             ArrayList<String> roles = new ArrayList(this.service.getAllRoles());
             for (String role : roles) {
                 view.getComboRole().addItem(role);
             }
-        } catch (SQLException e) {
-            System.out.println("a");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar cargos cadastrados");
         }
     }
 }

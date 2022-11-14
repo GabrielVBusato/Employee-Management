@@ -7,8 +7,7 @@ package com.source.presenter.EmployeeManagement.states;
 import com.source.model.EmployeeModel;
 import com.source.presenter.EmployeeManagement.EmployeeManagementPresenter;
 import com.source.presenter.EmployeeManagement.EmployeeManagementState;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 /**
  *
@@ -16,41 +15,27 @@ import java.awt.event.ActionListener;
  */
 public final class UpdateState extends EmployeeManagementState {
 
-    public UpdateState(EmployeeManagementPresenter presenter) {
+    public UpdateState(EmployeeManagementPresenter presenter) throws SQLException {
         super(presenter);
         initComponents();
     }
 
     @Override
-    public void onUpdate() {
+    public void onUpdate() throws SQLException {
         presenter.editEmployee();
     }
     
     @Override
-    public void onDelete() {
+    public void onDelete() throws SQLException {
         presenter.deleteEmployee();
     }
 
     @Override
-    public void initComponents() {
-        presenter.clearScreen();
+    public void initComponents() throws SQLException {
+        presenter.initComponents();
         view.getBtnDelete().setVisible(true);
         view.getBtnUpdate().setVisible(true);
-        view.getBtnCreate().setVisible(false);
-        view.getBtnUpdate().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                presenter.getState().onUpdate();
-            }
-        });
-        
-        view.getBtnDelete().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                presenter.getState().onDelete();
-            }
-        });
-        
+        view.getBtnCreate().setVisible(false);    
         EmployeeModel employee = presenter.getEmployeeById(presenter.getSearchId());
         presenter.setModel(employee);
     }

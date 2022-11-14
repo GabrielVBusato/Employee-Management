@@ -25,7 +25,7 @@ public class EmployeeService {
     }
 
     public EmployeeModel getEmployeeById(int id) throws SQLException {
-        return employeeRepository.findEmployee(id);
+        return employeeRepository.getEmployeeById(id);
     }
 
     public void deleteEmployeeById(int id) throws SQLException {
@@ -35,16 +35,20 @@ public class EmployeeService {
     public List<EmployeeModel> getAllEmployees() throws SQLException {
         return employeeRepository.getAllEmployees();
     }
-    
+
     public Collection<String> getAllRoles() throws SQLException {
         return employeeRepository.getAllRoles();
     }
-    
+
+    public List<EmployeeModel> getAllEmployeesByName(String name) throws SQLException {
+        return employeeRepository.getAllEmployeesByName(name);
+    }
+
     public int createEmployee(EmployeeModel employee) throws SQLException {
         EmployeeDTO empDTO = new EmployeeDTO(employee);
         return employeeRepository.createEmployee(empDTO);
     }
-    
+
     public void editEmployee(EmployeeModel employee) throws SQLException {
         EmployeeDTO empDTO = new EmployeeDTO(employee);
         employeeRepository.modifyEmployee(empDTO);

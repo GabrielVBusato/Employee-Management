@@ -15,19 +15,12 @@ public class EmployeeDTO {
     private int id;
     private String name;
     private String role;
-    private double baseSalary;
-    private double distanceFromWork;
-    private double serviceTime;
+    private String baseSalary;
+    private String distanceFromWork;
+    private String serviceTime;
     private String createdAt;
     private int absencesFromWork;
-
-    public int getAbsencesFromWork() {
-        return absencesFromWork;
-    }
-
-    public void setAbsencesFromWork(int absencesFromWork) {
-        this.absencesFromWork = absencesFromWork;
-    }
+    private int employeeOfTheMonth;
 
     public EmployeeDTO(EmployeeModel employee) {
         this.id = employee.getId();
@@ -38,6 +31,23 @@ public class EmployeeDTO {
         this.serviceTime = employee.getServiceTime();
         this.createdAt = employee.getCreatedAt();
         this.absencesFromWork = employee.getTotalAbsencesFromWork();
+        this.employeeOfTheMonth = employee.getEmployeeOfTheMonth();
+    }
+    
+    public int getEmployeeOfTheMonth() {
+        return employeeOfTheMonth;
+    }
+
+    public void setEmployeeOfTheMonth(int employeeOfTheMonth) {
+        this.employeeOfTheMonth = employeeOfTheMonth;
+    }
+
+    public int getAbsencesFromWork() {
+        return absencesFromWork;
+    }
+
+    public void setAbsencesFromWork(int absencesFromWork) {
+        this.absencesFromWork = absencesFromWork;
     }
     
     public void setId(int id) {
@@ -52,15 +62,15 @@ public class EmployeeDTO {
         this.role = role;
     }
 
-    public void setBaseSalary(double baseSalary) {
+    public void setBaseSalary(String baseSalary) {
         this.baseSalary = baseSalary;
     }
 
-    public void setDistanceFromWork(double distanceFromWork) {
+    public void setDistanceFromWork(String distanceFromWork) {
         this.distanceFromWork = distanceFromWork;
     }
 
-    public void setServiceTime(double serviceTime) {
+    public void setServiceTime(String serviceTime) {
         this.serviceTime = serviceTime;
     }
 
@@ -80,15 +90,15 @@ public class EmployeeDTO {
         return role;
     }
 
-    public double getBaseSalary() {
+    public String getBaseSalary() {
         return baseSalary;
     }
 
-    public double getDistanceFromWork() {
+    public String getDistanceFromWork() {
         return distanceFromWork;
     }
 
-    public double getServiceTime() {
+    public String getServiceTime() {
         return serviceTime;
     }
 

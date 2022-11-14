@@ -4,11 +4,9 @@
  */
 package com.source.presenter.EmployeeManagement.states;
 
-import com.source.model.EmployeeModel;
 import com.source.presenter.EmployeeManagement.EmployeeManagementPresenter;
 import com.source.presenter.EmployeeManagement.EmployeeManagementState;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,24 +21,16 @@ public final class CreateState extends EmployeeManagementState {
     }
 
     @Override
-    public void onCreate() {
-        try {
-            presenter.createEmployee();
-            presenter.setState(new UpdateState(presenter));
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios.");
-        }
+    public void onCreate() throws SQLException,
+            NumberFormatException {
+        presenter.createEmployee();
+        presenter.setState(new UpdateState(presenter));
+
     }
 
     @Override
     public void initComponents() {
-        presenter.clearScreen();
-        view.getBtnCreate().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                presenter.getState().onCreate();
-            }
-        });
+        presenter.initComponents();
         view.getComboRole().setSelectedIndex(0);
         view.getBtnCreate().setVisible(true);
         view.getBtnDelete().setVisible(false);

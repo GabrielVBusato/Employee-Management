@@ -4,8 +4,8 @@
  */
 package com.source;
 
-import com.source.dbConnection.connections.IDatabaseConnection;
-import com.source.dbConnection.connections.SqliteConnection;
+import com.source.dbConnection.factory.DatabaseConnectionFactory;
+import com.source.dbConnection.factory.SqliteConnectionFactory;
 import com.source.presenter.MainPresenter;
 
 
@@ -18,7 +18,7 @@ import com.source.presenter.MainPresenter;
 public class Application {
 
     public static void main(String[] args) {
-      IDatabaseConnection connection = new SqliteConnection();
-      new MainPresenter(connection);
+      DatabaseConnectionFactory connection = new SqliteConnectionFactory();
+      new MainPresenter(connection.getConnection());
     }
 }

@@ -32,18 +32,19 @@ public class EmployeeRepository {
         employeeDao.delete(id);
     }
 
-    public EmployeeModel findEmployee(int id) throws SQLException {
+    public EmployeeModel getEmployeeById(int id) throws SQLException {
         ResultSet result = employeeDao.read(id);
         EmployeeModel employee = new EmployeeModel();
         while (result.next()) {
             employee.setId(result.getInt("id"));
             employee.setName(result.getString("name"));
             employee.setRole(result.getString("role"));
-            employee.setBaseSalary(result.getFloat("base_salary"));
-            employee.setDistanceFromWork(result.getFloat("distance_from_work"));
-            employee.setServiceTime(result.getFloat("service_time"));
+            employee.setBaseSalary(result.getString("base_salary"));
+            employee.setDistanceFromWork(result.getString("distance_from_work"));
+            employee.setServiceTime(result.getString("service_time"));
             employee.setCreatedAt(result.getString("created_at"));
             employee.setTotalAbsencesFromWork(result.getInt("absences_from_work"));
+            employee.setEmployeeOfTheMonth(result.getInt("employee_of_the_month"));
         }
         connection.disconnect();
         return employee;
@@ -65,11 +66,32 @@ public class EmployeeRepository {
             employee.setId(result.getInt("id"));
             employee.setName(result.getString("name"));
             employee.setRole(result.getString("role"));
-            employee.setBaseSalary(result.getFloat("base_salary"));
-            employee.setDistanceFromWork(result.getFloat("distance_from_work"));
-            employee.setServiceTime(result.getFloat("service_time"));
+            employee.setBaseSalary(result.getString("base_salary"));
+            employee.setDistanceFromWork(result.getString("distance_from_work"));
+            employee.setServiceTime(result.getString("service_time"));
             employee.setCreatedAt(result.getString("created_at"));
             employee.setTotalAbsencesFromWork(result.getInt("absences_from_work"));
+            employee.setEmployeeOfTheMonth(result.getInt("employee_of_the_month"));
+            employees.add(employee);
+        }
+        connection.disconnect();
+        return employees;
+    }
+    
+    public List<EmployeeModel> getAllEmployeesByName(String name) throws SQLException {
+        ResultSet result = employeeDao.getAllByName(name);
+        List<EmployeeModel> employees = new ArrayList<>();
+        while (result.next()) {
+            EmployeeModel employee = new EmployeeModel();
+            employee.setId(result.getInt("id"));
+            employee.setName(result.getString("name"));
+            employee.setRole(result.getString("role"));
+            employee.setBaseSalary(result.getString("base_salary"));
+            employee.setDistanceFromWork(result.getString("distance_from_work"));
+            employee.setServiceTime(result.getString("service_time"));
+            employee.setCreatedAt(result.getString("created_at"));
+            employee.setTotalAbsencesFromWork(result.getInt("absences_from_work"));
+            employee.setEmployeeOfTheMonth(result.getInt("employee_of_the_month"));
             employees.add(employee);
         }
         connection.disconnect();
@@ -81,7 +103,6 @@ public class EmployeeRepository {
         Collection roles = new ArrayList();
         while (result.next()) {
             if (!roles.contains(result.getString("role"))) {
-                System.out.println(result.getString("role"));
                 roles.add(result.getString("role"));
             }
         }

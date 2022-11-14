@@ -5,6 +5,7 @@
 package com.source.view;
 
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 
@@ -35,6 +36,7 @@ public class MainView extends javax.swing.JFrame {
         menuItemCreateEmployee = new javax.swing.JMenuItem();
         menuItemSearchEmployee = new javax.swing.JMenuItem();
         menuSalaryManagement = new javax.swing.JMenu();
+        menuItemCalculateSalarys = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de gestão de pessoas");
@@ -55,6 +57,10 @@ public class MainView extends javax.swing.JFrame {
         menuBarMain.add(menuEmployeeManagement);
 
         menuSalaryManagement.setText("Salário");
+
+        menuItemCalculateSalarys.setText("Calcular salários");
+        menuSalaryManagement.add(menuItemCalculateSalarys);
+
         menuBarMain.add(menuSalaryManagement);
 
         setJMenuBar(menuBarMain);
@@ -98,9 +104,36 @@ public class MainView extends javax.swing.JFrame {
         this.menuSalaryManagement = menuSalaryManagement;
     }
 
+    public JMenuBar getMenuBarMain() {
+        return menuBarMain;
+    }
+
+    public void setMenuBarMain(JMenuBar menuBarMain) {
+        this.menuBarMain = menuBarMain;
+    }
+
+    public JMenu getMenuEmployeeManagement() {
+        return menuEmployeeManagement;
+    }
+
+    public void setMenuEmployeeManagement(JMenu menuEmployeeManagement) {
+        this.menuEmployeeManagement = menuEmployeeManagement;
+    }
+
+    public JMenuItem getMenuItemCalculateSalarys() {
+        return menuItemCalculateSalarys;
+    }
+
+    public void setMenuItemCalculateSalarys(JMenuItem menuItemCalculateSalarys) {
+        this.menuItemCalculateSalarys = menuItemCalculateSalarys;
+    }
+    
+    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar menuBarMain;
     private javax.swing.JMenu menuEmployeeManagement;
+    private javax.swing.JMenuItem menuItemCalculateSalarys;
     private javax.swing.JMenuItem menuItemCreateEmployee;
     private javax.swing.JMenuItem menuItemSearchEmployee;
     private javax.swing.JMenu menuSalaryManagement;

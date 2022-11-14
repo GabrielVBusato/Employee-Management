@@ -5,6 +5,7 @@
 package com.source.presenter.EmployeeManagement;
 
 import com.source.view.EmployeeManagementView;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,21 +23,17 @@ public abstract class EmployeeManagementState {
         this.view = presenter.getView();
     }
 
-    public abstract void initComponents();
+    public abstract void initComponents() throws SQLException;
 
-    public void onUpdate() {
+    public void onUpdate() throws SQLException {
         JOptionPane.showMessageDialog(null, operationErr);
     }
 
-    public void onCreate() {
+    public void onCreate() throws SQLException{
         JOptionPane.showMessageDialog(null, operationErr);
     }
 
-    public void onDelete() {
-        JOptionPane.showMessageDialog(null, operationErr);
-    }
-
-    public void onInit() {
+    public void onDelete() throws SQLException{
         JOptionPane.showMessageDialog(null, operationErr);
     }
 }

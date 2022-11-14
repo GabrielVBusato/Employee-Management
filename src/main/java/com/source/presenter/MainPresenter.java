@@ -5,7 +5,11 @@
 package com.source.presenter;
 
 import com.source.dbConnection.connections.IDatabaseConnection;
+import com.source.presenter.CalculateSalarys.CalculateSalarysPresenter;
 import com.source.presenter.EmployeeManagement.EmployeeManagementPresenter;
+import com.source.presenter.SearchEmployee.SearchEmployeePresenter;
+import com.source.service.EmployeeBonusService;
+import com.source.service.EmployeeService;
 import com.source.view.MainView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,26 +19,39 @@ import java.awt.event.ActionListener;
  * @author busat
  */
 public class MainPresenter {
-    private static final MainView view = new MainView();
+
+    private static MainView view = null;
     private final IDatabaseConnection connection;
-    
-    public MainPresenter(IDatabaseConnection connection){
+
+    public MainPresenter(IDatabaseConnection connection) {
         this.connection = connection;
+        if (view == null) {
+            view = new MainView();
+        }
         view.setVisible(true);
         initComponents();
     }
-    
-    public void setViewVisible(){
-        view.setVisible(true);
-    }
-    
-    
-    private void initComponents(){
-        view.getMenuItemCreateEmployee().addActionListener(new ActionListener(){
+
+    private void initComponents() {
+        EmployeeService employeeService = new EmployeeService(connection);
+        EmployeeBonusService employeeBonusService = new EmployeeBonusService(connection);
+        view.getMenuItemCreateEmployee().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new EmployeeManagementPresenter(connection);
-            }            
+                new EmployeeManagementPresenter(employeeService);
+            }
+        });
+        view.getMenuItemSearchEmployee().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SearchEmployeePresenter(employeeService, employeeBonusService);
+            }
+        });
+        view.getMenuItemCalculateSalarys().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new CalculateSalarysPresenter(employeeService, employeeBonusService);
+            }
         });
     }
 }

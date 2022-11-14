@@ -13,35 +13,24 @@ public class EmployeeModel {
     private int id;
     private String name;
     private String role;
-    private double baseSalary;
-    private double totalSalary;
+    private String baseSalary;
+    private Double bonusTotal;
     private int totalAbsencesFromWork;
-    private double distanceFromWork;
-    private double serviceTime;
+    private String distanceFromWork;
+    private String serviceTime;
     private String createdAt;
-
-    public EmployeeModel(int id,
-            String name,
-            String role,
-            double baseSalary,
-            double totalSalary,
-            int totalAbsencesFromWork,
-            double distanceFromWork,
-            double serviceTime,
-            String createdAt) {
-        this.id = id;
-        this.name = name;
-        this.role = role;
-        this.baseSalary = baseSalary;
-        this.totalSalary = totalSalary;
-        this.totalAbsencesFromWork = totalAbsencesFromWork;
-        this.distanceFromWork = distanceFromWork;
-        this.serviceTime = serviceTime;
-        this.createdAt = createdAt;
-    }
+    private int employeeOfTheMonth;
 
     public EmployeeModel() {
+        this.bonusTotal = 0.0;
+    }
+    
+    public int getEmployeeOfTheMonth() {
+        return employeeOfTheMonth;
+    }
 
+    public void setEmployeeOfTheMonth(int employeeOfTheMonth) {
+        this.employeeOfTheMonth = employeeOfTheMonth;
     }
 
     public int getId() {
@@ -68,20 +57,20 @@ public class EmployeeModel {
         this.role = role;
     }
 
-    public double getBaseSalary() {
+    public String getBaseSalary() {
         return baseSalary;
     }
 
-    public void setBaseSalary(double baseSalary) {
+    public void setBaseSalary(String baseSalary) {
         this.baseSalary = baseSalary;
     }
 
-    public double getTotalSalary() {
-        return totalSalary;
+    public Double getBonusTotal() {
+        return bonusTotal;
     }
 
-    public void setTotalSalary(double totalSalary) {
-        this.totalSalary = totalSalary;
+    public void setBonusTotal(Double bonusTotal) {
+        this.bonusTotal = bonusTotal;
     }
 
     public int getTotalAbsencesFromWork() {
@@ -92,19 +81,19 @@ public class EmployeeModel {
         this.totalAbsencesFromWork = totalAbsencesFromWork;
     }
 
-    public double getDistanceFromWork() {
+    public String getDistanceFromWork() {
         return distanceFromWork;
     }
 
-    public void setDistanceFromWork(double distanceFromWork) {
+    public void setDistanceFromWork(String distanceFromWork) {
         this.distanceFromWork = distanceFromWork;
     }
 
-    public double getServiceTime() {
+    public String getServiceTime() {
         return serviceTime;
     }
 
-    public void setServiceTime(double serviceTime) {
+    public void setServiceTime(String serviceTime) {
         this.serviceTime = serviceTime;
     }
 
@@ -118,7 +107,7 @@ public class EmployeeModel {
 
     @Override
     public String toString() {
-        return "EmployeeModel{" + "id=" + id + ", name=" + name + ", role=" + role + ", baseSalary=" + baseSalary + ", totalSalary=" + totalSalary + ", totalAbsencesFromWork=" + totalAbsencesFromWork + ", distanceFromWork=" + distanceFromWork + ", serviceTime=" + serviceTime + ", createdAt=" + createdAt + '}';
+        return "EmployeeModel{" + "id=" + id + ", name=" + name + ", role=" + role + ", baseSalary=" + baseSalary + ", bonusTotal=" + bonusTotal + ", totalAbsencesFromWork=" + totalAbsencesFromWork + ", distanceFromWork=" + distanceFromWork + ", serviceTime=" + serviceTime + ", createdAt=" + createdAt + '}';
     }
 
 }

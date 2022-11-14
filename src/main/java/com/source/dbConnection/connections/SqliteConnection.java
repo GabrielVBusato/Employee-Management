@@ -21,7 +21,6 @@ public class SqliteConnection implements IDatabaseConnection {
     public boolean connect() throws SQLException {
         String url = "jdbc:sqlite:database/employee_management.db";
         SqliteConnection.connection = DriverManager.getConnection(url);
-        System.out.println("conectou");
         return true;
     }
 
@@ -30,7 +29,6 @@ public class SqliteConnection implements IDatabaseConnection {
         if (!SqliteConnection.connection.isClosed()) {
             SqliteConnection.connection.close();
         }
-        System.out.println("desconectou");
         return true;
     }
     
