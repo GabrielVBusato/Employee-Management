@@ -8,7 +8,7 @@ import com.source.dbConnection.connections.IDatabaseConnection;
 import com.source.dto.EmployeeDTO;
 import com.source.model.EmployeeModel;
 import com.source.repository.EmployeeRepository;
-import com.source.service.EmployeeService.strategy.StatisticStrategy;
+import com.source.service.EmployeeService.statisticsSalaryChain.StatisticChain;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
@@ -55,28 +55,28 @@ public class EmployeeService {
         employeeRepository.modifyEmployee(empDTO);
     }
 
-    public StatisticStrategy getAverageSalarysByMonth() throws SQLException {
+    public StatisticChain getAverageSalarysByMonth() throws SQLException {
         return employeeRepository.getAverageSalarys();
     }
 
-    public StatisticStrategy getSumSalaryByMonth() throws SQLException {
+    public StatisticChain getSumSalaryByMonth() throws SQLException {
         return employeeRepository.getSumSalarys();
     }
 
-    public StatisticStrategy getHighestSalaryByMonth() throws SQLException {
+    public StatisticChain getHighestSalaryByMonth() throws SQLException {
         return employeeRepository.getHighestSalary();
     }
 
-    public StatisticStrategy getLowestSalaryByMonth() throws SQLException {
+    public StatisticChain getLowestSalaryByMonth() throws SQLException {
         return employeeRepository.getLowestSalary();
     }
 
-    public StatisticStrategy getTotalSalarysByMonth() throws SQLException {
+    public StatisticChain getTotalSalarysByMonth() throws SQLException {
         return employeeRepository.getTotalSalarys();
     }
 
-    public void getSalaryStatistics(List<StatisticStrategy> strategyList) throws SQLException {
-        for (StatisticStrategy strategy : strategyList) {
+    public void setSalaryStatistics(List<StatisticChain> strategyList) throws SQLException {
+        for (StatisticChain strategy : strategyList) {
             strategy.calculate(this);
         }
     }

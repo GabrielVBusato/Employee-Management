@@ -4,21 +4,17 @@
  */
 package com.source.presenter.SalaryStatistics;
 
-import com.source.service.EmployeeBonusService.EmployeeBonusService;
 import com.source.service.EmployeeService.EmployeeService;
-import com.source.service.EmployeeService.strategy.AverageSalary;
-import com.source.service.EmployeeService.strategy.HighestSalary;
-import com.source.service.EmployeeService.strategy.LowestSalary;
-import com.source.service.EmployeeService.strategy.StatisticStrategy;
-import com.source.service.EmployeeService.strategy.SumSalary;
-import com.source.service.EmployeeService.strategy.TotalNumberOfSalarys;
+import com.source.service.EmployeeService.statisticsSalaryChain.AverageSalary;
+import com.source.service.EmployeeService.statisticsSalaryChain.HighestSalary;
+import com.source.service.EmployeeService.statisticsSalaryChain.LowestSalary;
+import com.source.service.EmployeeService.statisticsSalaryChain.StatisticChain;
+import com.source.service.EmployeeService.statisticsSalaryChain.SumSalary;
+import com.source.service.EmployeeService.statisticsSalaryChain.TotalNumberOfSalarys;
 import com.source.utils.DateUtils;
 import com.source.view.SalaryStatisticsView;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -47,19 +43,19 @@ public class SalaryStatisticsPresenter {
 
     private void initComponents() {
         clearScreen();
-        ArrayList<StatisticStrategy> strategyList = new ArrayList();
+        ArrayList<StatisticChain> salarysStatisticsList = new ArrayList();
         try {
-            strategyList.add(new AverageSalary());
-            strategyList.add(new HighestSalary());
-            strategyList.add(new LowestSalary());
-            strategyList.add(new SumSalary());
-            strategyList.add(new TotalNumberOfSalarys());
-            service.getSalaryStatistics(strategyList);
+            salarysStatisticsList.add(new AverageSalary());
+            salarysStatisticsList.add(new HighestSalary());
+            salarysStatisticsList.add(new LowestSalary());
+            salarysStatisticsList.add(new SumSalary());
+            salarysStatisticsList.add(new TotalNumberOfSalarys());
+            service.setSalaryStatistics(salarysStatisticsList);
             DefaultTableModel tableModel = (DefaultTableModel) view.getTblStatistics().getModel();
             view.getTblStatistics().getColumnModel().getColumn(1).
                     setHeaderValue(DateUtils.getFormattedCurrentDate());
-            for (StatisticStrategy strategy : strategyList) {
-                Object[] rowData = {strategy.getName(), strategy.getValue()};
+            for (StatisticChain salary : salarysStatisticsList) {
+                Object[] rowData = {salary.getName(), salary.getValue()};
                 tableModel.addRow(rowData);
             }
         } catch (SQLException ex) {
